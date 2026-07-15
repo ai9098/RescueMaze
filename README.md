@@ -10,9 +10,9 @@
 ![Game](Images/game.png)
 
 ## 開発環境
+- Windows 11
 - Unity 6.3
 - C#
-- Windows 11
 - Blender（タイトル画面制作）
 
 ## 操作方法
