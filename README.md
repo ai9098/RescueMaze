@@ -44,7 +44,7 @@
 - 救出対象の衝突判定を改善し、壁をすり抜けないようにする。
 
 ## 動画
-（YouTubeのURLを記載）
+[https://youtu.be/VWtFZuNf9bs](https://youtu.be/VWtFZuNf9bs)
 
 ## 作者
 芳野 愛和
