@@ -10,7 +10,7 @@
 ![Game](Images/game.png)
 
 <p align="center">
-  <img src="game.gif" alt="RescueMazeGameplay" width="640">
+  <img src="Images/game.gif" alt="RescueMazeGameplay" width="640">
 </p>
 
 
