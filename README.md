@@ -10,7 +10,7 @@
 ![Game](Images/game.png)
 
 以下のgifは、クリアアニメーションの様子です。
-ゲーム全体のサイクルがしっかり完結するように作り込みました。
+ゲーム全体のサイクルが完結するように作り込みました。
 
 <p align="center">
   <img src="Images/clear.gif" alt="RescueMazeGameplay" width="640">
