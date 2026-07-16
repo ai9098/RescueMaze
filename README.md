@@ -9,6 +9,11 @@
 プレイヤーは一人称視点と上空カメラを切り替えながら、敵の視野を避けて迷路を攻略します。
 ![Game](Images/game.png)
 
+<p align="center">
+  <img src="game.gif" alt="RescueMazeGameplay" width="640">
+</p>
+
+
 ## 開発環境
 - Windows 11
 - Unity 6.3
