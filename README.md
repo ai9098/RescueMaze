@@ -9,6 +9,9 @@
 プレイヤーは一人称視点と上空カメラを切り替えながら、敵の視野を避けて迷路を攻略します。
 ![Game](Images/game.png)
 
+### クリア演出
+作成したクリアアニメーションの様子です。ゲーム全体のサイクルがしっかり完結するように作り込みました
+
 <p align="center">
   <img src="Images/clear.gif" alt="RescueMazeGameplay" width="640">
 </p>
