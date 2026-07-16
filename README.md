@@ -10,8 +10,12 @@
 ![Game](Images/game.png)
 
 <p align="center">
+  <img src="Images/game.png" alt="RescueMazeGameplay" width="640">
+</p>r
+
+<p align="center">
   <img src="Images/game.gif" alt="RescueMazeGameplay" width="640">
-</p>
+</p>r
 
 
 ## 開発環境
