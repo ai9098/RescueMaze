@@ -58,6 +58,9 @@
 ## 動画
 [https://youtu.be/VWtFZuNf9bs](https://youtu.be/VWtFZuNf9bs)
 
+## 使用したアセット
+[AllSky Free - 10 Sky / Skybox Set](https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014)
+
 ## 作者
 芳野 愛和
 
