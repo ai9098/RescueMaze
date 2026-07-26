@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using System.Collections;
 
-public class StraightEnemy : MonoBehaviour
+public class RotateEnemy : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 3.0f;  // 通常の移動速度
+    [SerializeField] private float moveAngle = 45f;  // 回転通常の角度
     [SerializeField] private float followSpeed = 1.0f;  // 追跡時の移動速度
 
     [SerializeField] private float angle = 45f;  // 視界の角度
@@ -23,6 +24,8 @@ public class StraightEnemy : MonoBehaviour
     private Color defaultColor;  // ゲーム開始時の元も色を覚えておく変数
     private Renderer enemyColor;  // 敵の色を変えるための変数
 
+    private Quaternion originalRotation;
+
     // SE用変数
     private AudioSource audioSource;
     [SerializeField] private AudioClip EnemyFollowSE;
@@ -38,15 +41,15 @@ public class StraightEnemy : MonoBehaviour
 
         // 視界の可視化
         CreateConeMesh();
+
+        // ゲーム開始時の角度を保存
+        originalRotation = transform.rotation;
+        // 回転させるコルーチン開始（一度だけ呼ばれる）
+        StartCoroutine(MoveRoutine());
     }
 
     void FixedUpdate()
     {
-        Vector3 move = transform.forward * moveSpeed;
-
-        // 真っすぐに進む
-        rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
-    
         if (isPlayerSpotted)
         {
             // プレイヤーの座標を取得
@@ -66,6 +69,9 @@ public class StraightEnemy : MonoBehaviour
         }
         else
         {
+            // 見失ったら止める
+            rb.linearVelocity = Vector3.zero;
+
             enemyColor.material.color = defaultColor;  // 色を元に戻す
             exclamationMark.SetActive(false);  // 「！」マーク非表示
 
@@ -79,13 +85,47 @@ public class StraightEnemy : MonoBehaviour
         isPlayerSpotted = false;
     }
 
-    void OnCollisionEnter(Collision collision)
+    IEnumerator MoveRoutine()
     {
-        // 壁にぶつかったら反対方向に
-        if (collision.gameObject.CompareTag("Wall"))
+        while (true)
         {
-            // y軸回転
-            transform.Rotate(0, 180, 0);
+            // プレイヤーを追いかけていない場合は
+            while (!isPlayerSpotted)
+            {
+                // 指定した角度分回転
+                transform.Rotate(new Vector3(0, moveAngle, 0));
+
+                // プレイヤーを見つけたら回転の動きをやめ、追いかける
+                if (isPlayerSpotted) break;
+
+                // 3秒間待つ間にプレイヤーを見つけたら、すぐに追いかける
+                float timer = 0f;
+                while (timer < 3f && !isPlayerSpotted)
+                {
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+
+                // プレイヤーを見つけたら回転の動きをやめ、追いかける
+                if (isPlayerSpotted) break;
+
+                // 元の角度に戻す
+                transform.rotation = originalRotation;
+
+                // 3秒間待つ間にプレイヤーを見つけたら、すぐに追いかける
+                timer = 0f;
+                while (timer < 3f && !isPlayerSpotted)
+                {
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            // 追跡中は回転の動きを止める
+            while (isPlayerSpotted)
+            {
+                yield return null;
+            }
         }
     }
 

@@ -96,6 +96,7 @@ public class RescueTarget : MonoBehaviour
             // ESを鳴らす
             audioSource.PlayOneShot(RescueSE);
 
+            // 助けた人数のカウントを増やす
             GameManager.Instance.RescueOne();
         }
     }

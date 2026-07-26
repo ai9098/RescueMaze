@@ -19,14 +19,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ClearUI2;
     [SerializeField] private GameObject NextUI;
 
-    public bool stageClear = false;  // ステージクリアしたかどうか
+    // ゲームオーバー演出用のUI
+    [SerializeField] private GameObject GameOverBandUI;
+    [SerializeField] private GameObject GameOverUI1;
+    [SerializeField] private GameObject GameOverUI2;
+
+    public bool LookFirstUI = false;  // 説明UI表示中かどうか
+    public bool stageClear = false;   // ステージクリアしたかどうか
+    public bool Timer = false;        // タイマーが0になったらステージ再読み込み
+    
+    private bool canReleoad = true;   // Rキー（ステージリロード）を受け付けるかどうかのフラグ
+    private bool stageGameOver = true;   // ゲームオーバー演出は一度だけ
 
     // SE用変数
     private AudioSource audioSource;
     [SerializeField] private AudioClip ClearSE;
+    [SerializeField] private AudioClip GameOverSE;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         Instance = this;
 
@@ -52,14 +63,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Rキーが押されたらカメラを切り替える
-        if (Input.GetKeyDown(KeyCode.R))
+        // Rキーを押してもよい状態でが押されたら、シーンを再読み込み
+        if (canReleoad && Input.GetKeyDown(KeyCode.R))
         {
             // 現在のシーンを取得
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;           
             // シーンをリロード
             SceneManager.LoadScene(currentSceneIndex);
+        }
+
+        // タイマーが0になったらシーンを再読み込みする演出
+        if (stageGameOver && Timer)
+        {
+            stageGameOver = false;
+            StartCoroutine(GameOverUI());
         }
     }
 
@@ -92,13 +109,34 @@ public class GameManager : MonoBehaviour
         // SEを鳴らす
         audioSource.PlayOneShot(ClearSE);
 
-        // 3秒待つ
+        // 2秒待つ
         yield return new WaitForSeconds(2f);
 
         // 次のステージを促すUI表示
         NextUI.SetActive(true);
 
         yield break;
+    }
+
+    // ゲームオーバー時のアニメーション用コルーチン
+    IEnumerator GameOverUI()
+    {
+        // 演出が終わるまでRキーが押せないようにする
+        canReleoad = false;
+
+        // UIを表示する
+        GameOverBandUI.SetActive(true);
+        GameOverUI1.SetActive(true);
+        GameOverUI2.SetActive(true);
+
+        // SEを鳴らす
+        audioSource.PlayOneShot(GameOverSE);
+
+        // 2秒待つ
+        yield return new WaitForSeconds(2f);
+
+        // Rキーを押せるようにする
+        canReleoad = true;
     }
 
     private void LoadNextScene()

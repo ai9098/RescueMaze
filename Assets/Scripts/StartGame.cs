@@ -38,7 +38,7 @@ public class StartGame : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);  // 1間秒再生
 
-        // シーン１に移動
+        // シーン１（難易度選択画面）に移動
         SceneManager.LoadScene(1);
     }
 }
