@@ -63,7 +63,11 @@
 - 救出対象の衝突判定を改善し、壁をすり抜けないようにする。
 
 ## 動画
+Ver. 1.0
 [https://youtu.be/VWtFZuNf9bs](https://youtu.be/VWtFZuNf9bs)
+
+Ver. 1.1.0
+[https://youtu.be/sb0J-VwltkU](https://youtu.be/sb0J-VwltkU)
 
 ## 使用したアセット
 [AllSky Free - 10 Sky / Skybox Set](https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014)
