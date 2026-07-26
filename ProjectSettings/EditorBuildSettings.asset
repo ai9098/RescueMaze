@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tilte.unity
     guid: 70495b667bc1cde4b91f8ed4580978e9
   - enabled: 1
+    path: Assets/Scenes/Difficulty.unity
+    guid: f6e26773c9b34694e9dfb86179121f4b
+  - enabled: 1
     path: Assets/Scenes/Stage1.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
