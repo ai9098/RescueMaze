@@ -18,8 +18,8 @@ public class TimerManager : MonoBehaviour
 
     void Update()
     {
-        // UI表示中ならタイマーを進めない
-        if (GameManager.Instance.LookFirstUI) return;
+        // UI表示中または、クリア後ならタイマーを進めない
+        if (GameManager.Instance.LookFirstUI || GameManager.Instance.stageClear) return;
 
         // 0秒になったらフラグをオンにする
         if (timer < 0) GameManager.Instance.Timer = true;
