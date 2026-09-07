@@ -4,30 +4,46 @@ using UnityEngine;
 
 public class RescueTarget : MonoBehaviour
 {
-    [SerializeField] Transform player;
-    [SerializeField] Transform cameraTransform;
     [SerializeField] float MoveSpeed = 3.0f;
     [SerializeField] Vector3 offset;
-    private bool followPlayer = false;  // Playerについていく状態かどうか
-    private bool clear = false;  // 救出済みかどうか
 
-    private Vector3 worldPos;
+    private Vector3 worldPos; // ゲーム開始時の座標を格納する
 
-    [SerializeField] private TextMeshProUGUI targetLostUI;  // はぐれたときに表示するUI
+    [Header("参照オブジェクト")] 
     [SerializeField] GameObject ResetLight;
     [SerializeField] GameObject CheckMark;
+    public Transform player; // プレイヤーの位置を格納する変数
+    public Transform playerCamera; // プレイヤーの一人称カメラ
+    private TextMeshProUGUI targetLostUI;  // はぐれたときに表示するUI
+    private Canvas canvas; // シーン内のCanvasを格納
 
-    // SE用変数
+    [Header("サウンド設定")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip RescueSE;
     [SerializeField] private AudioClip EnemyAtackSE;
 
+    private bool followPlayer = false;  // Playerについていく状態かどうか
+    private bool clear = false;  // 救出済みかどうか
+
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        // プレイヤーの位置を取得
+        player = GameObject.FindWithTag("Player").transform;
+        // プレイヤーカメラの位置を取得
+        playerCamera = GameObject.FindWithTag("MainCamera").transform;
+
+        // シーン内のCanvasを検索
+        canvas = FindFirstObjectByType<Canvas>();
+
+        if (canvas != null) {
+            // シーン内のTargetLostを探す
+            targetLostUI = canvas.transform.Find("TargetLost").GetComponent<TextMeshProUGUI>();
+        }
 
         // ゲーム開始したタイミングの座標を取得する
         worldPos = transform.position;
+
+        audioSource = GetComponent<AudioSource>();  
     }
 
     void Update()
@@ -36,7 +52,7 @@ public class RescueTarget : MonoBehaviour
         if (!followPlayer) return;
 
         // プレイヤーの1.5m後ろをついていく(向きはカメラの正面の逆側に)
-        Vector3 targetPos = player.position - cameraTransform.forward * 1.5f;
+        Vector3 targetPos = player.position - playerCamera.forward * 1.5f;
 
         // 少しずつ近づく(offset分ずらす)
         transform.position = Vector3.MoveTowards(
