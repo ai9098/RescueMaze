@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(currentSceneIndex);
         }
 
-        //Esc‚ª‰Ÿ‚³‚ê‚½Žž
+        // Esc‚ª‰Ÿ‚³‚ê‚½Žž
         if (Input.GetKey(KeyCode.Escape))
         {
             Debug.Log("Finish Game");
