@@ -51,8 +51,8 @@ public class DifficultyScene : MonoBehaviour
     // Backボタンが押されたら
     public void OnClickBack()
     {
-        // シーン０（タイトル画面）に移動
-        SceneManager.LoadScene(0);
+        // タイトルシーンに移動
+        SceneManager.LoadScene("Title");
     }
 
     IEnumerator PressButton()
@@ -62,8 +62,8 @@ public class DifficultyScene : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);  // 1間秒再生
 
-        // シーン２（ゲーム画面）に移動
-        SceneManager.LoadScene(2);
+        // ステージシーンに移動
+        SceneManager.LoadScene("Stage1");
     }
 }
 

@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public bool Timer = false;        // タイマーが0になったらステージ再読み込み
     
     private bool canReleoad = true;   // Rキー（ステージリロード）を受け付けるかどうかのフラグ
-    private bool stageGameOver = true;   // ゲームオーバー演出は一度だけ
+    //private bool stageGameOver = true;   // ゲームオーバー演出は一度だけ（タイマー機能削除によりコメントアウト）
 
     // SE用変数
     private AudioSource audioSource;
@@ -72,12 +72,19 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(currentSceneIndex);
         }
 
-        // タイマーが0になったらシーンを再読み込みする演出
-        if (stageGameOver && Timer)
+        //Escが押された時
+        if (Input.GetKey(KeyCode.Escape))
         {
-            stageGameOver = false;
-            StartCoroutine(GameOverUI());
+            Debug.Log("Finish Game");
+            Application.Quit(); // ゲームプレイ終了
         }
+
+        // タイマーが0になったらシーンを再読み込みする演出（タイマー機能は削除）
+        //if (stageGameOver && Timer)
+        //{
+        //    stageGameOver = false;
+        //    StartCoroutine(GameOverUI());
+        //}
     }
 
     public void RescueOne()
@@ -154,7 +161,7 @@ public class GameManager : MonoBehaviour
         else if (currentSceneIndex + 1 >= totalScenes)
         {
             // 総シーン数以上の場合はタイトルに戻る
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Title");
         }
     }
 }

@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6629126505998656637, guid: 1ffb3ffaaec5b22428b5fc7738e5be73, type: 3}
       propertyPath: offset.x
-      value: 1.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 9092075939603370375, guid: 1ffb3ffaaec5b22428b5fc7738e5be73, type: 3}
       propertyPath: m_Name
@@ -528,7 +528,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &153407541
 Transform:
   m_ObjectHideFlags: 0

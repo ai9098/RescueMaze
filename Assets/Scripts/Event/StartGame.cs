@@ -26,9 +26,8 @@ public class StartGame : MonoBehaviour
         // Escapeが押されたら
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // ゲーム終了
-            Application.Quit();
             Debug.Log("Finish Game");
+            Application.Quit(); // ゲーム終了
         }
     }
 
@@ -39,7 +38,7 @@ public class StartGame : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);  // 1間秒再生
 
-        // シーン１（難易度選択画面）に移動
-        SceneManager.LoadScene(1);
+        // 難易度選択シーンに移動
+        SceneManager.LoadScene("Difficulty");
     }
 }
