@@ -8943,7 +8943,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 94288467}
         m_TargetAssemblyTypeName: PopupPanelUI, Assembly-CSharp
         m_MethodName: CloseUI
         m_Mode: 1
