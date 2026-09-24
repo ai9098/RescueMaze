@@ -2,51 +2,48 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-// 難易度設定
+// 難易度を設定する
 public class DifficultyScene : MonoBehaviour
 {
     // SE用変数
     private AudioSource audioSource;
     [SerializeField] private AudioClip SelectSE;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+    }
+
+    // 難易度を設定してゲームを開始する
+    public void SetDifficulty(int difficulty)
+    {
+        // 難易度を設定
+        GameDifficulty.difficulty = difficulty;
+
+        // SEと、シーン移動のコルーチン
+        StartCoroutine(PressButton());
     }
 
     // Easyボタンが押されたら
     public void OnClickEasy()
     {
         // Easyに設定
-        GameDifficulty.difficulty = 0;
-        Debug.Log("difficulty : Easy");
-
-        // SEと、シーン移動のコルーチン
-        StartCoroutine(PressButton());
+        SetDifficulty(0);
     }
 
     // Nomalボタンが押されたら
     public void OnClickNomal()
     {
         // Nomalに設定
-        GameDifficulty.difficulty = 1;
-        Debug.Log("difficulty : Nomal");
-
-        // SEと、シーン移動のコルーチン
-        StartCoroutine(PressButton());
+        SetDifficulty(1);
     }
 
-    // Hardボタンが押されたら（制作予定）
-    //public void OnClickDifficult()
-    //{
-    //    // Hardに設定
-    //    GameDifficulty.difficulty = 1;
-    //    Debug.Log("difficulty : Hard");
-
-    //    // SEと、シーン移動のコルーチン
-    //    StartCoroutine(PressButton());
-    //}
+    // Hardボタンが押されたら
+    public void OnClickHard()
+    {
+        // Hardに設定
+        SetDifficulty(2);
+    }
 
     // Backボタンが押されたら
     public void OnClickBack()
@@ -67,9 +64,9 @@ public class DifficultyScene : MonoBehaviour
     }
 }
 
-// 難易度を保存しておく
+// シーン間で難易度を共有
 public static class GameDifficulty
 {
-    // 0:Easy 1:Normalを指す
-    public static int difficulty = 0;  // 初期値には0を入れておく
+    // 0:Easy 1:Normal 2:Hardを指す
+    public static int difficulty = 0;  // バグ防止のため、初期値には0を入れておく
 }

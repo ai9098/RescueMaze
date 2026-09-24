@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+// 救出対象の処理
 public class RescueTarget : MonoBehaviour
 {
     [SerializeField] float MoveSpeed = 3.0f;
@@ -12,8 +13,8 @@ public class RescueTarget : MonoBehaviour
     [Header("参照オブジェクト")] 
     [SerializeField] GameObject ResetLight;
     [SerializeField] GameObject CheckMark;
-    public Transform player; // プレイヤーの位置を格納する変数
-    public Transform playerCamera; // プレイヤーの一人称カメラ
+    private Transform player; // プレイヤーの位置を格納する変数
+    private Transform playerCamera; // プレイヤーの一人称カメラ
     private TextMeshProUGUI targetLostUI;  // はぐれたときに表示するUI
     private Canvas canvas; // シーン内のCanvasを格納
 
@@ -35,12 +36,12 @@ public class RescueTarget : MonoBehaviour
         // シーン内のCanvasを検索
         canvas = FindFirstObjectByType<Canvas>();
 
-        if (canvas != null) {
-            // シーン内のTargetLostを探す
+        // シーン内のTargetLostを探す
+        if (canvas != null) {     
             targetLostUI = canvas.transform.Find("TargetLost").GetComponent<TextMeshProUGUI>();
         }
 
-        // ゲーム開始したタイミングの座標を取得する
+        // ゲーム開始したタイミングで、自身の座標を取得する
         worldPos = transform.position;
 
         audioSource = GetComponent<AudioSource>();  
@@ -89,7 +90,7 @@ public class RescueTarget : MonoBehaviour
             // ESを鳴らす
             audioSource.PlayOneShot(EnemyAtackSE);
 
-            // コルーチン開始
+            // 初期位置に戻ったことを知らせるコルーチン開始
             StartCoroutine(LostUI());
 
             // 追跡中止
