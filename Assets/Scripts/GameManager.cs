@@ -8,22 +8,29 @@ public class GameManager : MonoBehaviour
     // GameManagerの関数を呼び出せるようにする
     public static GameManager Instance;
 
+    [Header("救出対象の人数")]
+    [SerializeField] private TextMeshProUGUI targetNumUI;  // 救出対象の数を表示するUI
     private int totalTarget;
     private int rescuedCount = 0;
 
-    [SerializeField] private TextMeshProUGUI targetNumUI;  // 救出対象の数を表示するUI
-
     // クリア演出用のUI
+    [Header("クリア演出用のUI")]
     [SerializeField] private GameObject BandUI;
     [SerializeField] private GameObject ClearUI1;
     [SerializeField] private GameObject ClearUI2;
     [SerializeField] private GameObject NextUI;
 
     // ゲームオーバー演出用のUI
+    [Header("ゲームオーバー演出用のUI")]
     [SerializeField] private GameObject GameOverBandUI;
     [SerializeField] private GameObject GameOverUI1;
     [SerializeField] private GameObject GameOverUI2;
 
+    // リセット用のUI
+    [Header("リセット用のUI")]
+    [SerializeField] private GameObject ResetUI;
+
+    [Header("フラグ")]
     public bool LookFirstUI = false;  // 説明UI表示中かどうか
     public bool stageClear = false;   // ステージクリアしたかどうか
     public bool Timer = false;        // タイマーが0になったらステージ再読み込み
@@ -32,22 +39,24 @@ public class GameManager : MonoBehaviour
     //private bool stageGameOver = true;   // ゲームオーバー演出は一度だけ（タイマー機能削除によりコメントアウト）
 
     // SE用変数
+    [Header("サウンド設定")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip ClearSE;
     [SerializeField] private AudioClip GameOverSE;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         Instance = this;
 
         audioSource = GetComponent<AudioSource>();
+    } 
 
+    private void Start()
+    {
         // ステージ上の救出対象数
         totalTarget = GameObject.FindGameObjectsWithTag("RescueTarget").Length;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 救出した人数 / 救出する総人数
@@ -66,10 +75,12 @@ public class GameManager : MonoBehaviour
         // Rキーを押してもよい状態でが押されたら、シーンを再読み込み
         if (canReleoad && Input.GetKeyDown(KeyCode.R))
         {
-            // 現在のシーンを取得
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;           
-            // シーンをリロード
-            SceneManager.LoadScene(currentSceneIndex);
+            // リセット用UIが非表示なら
+            if (ResetUI != null && !ResetUI.activeSelf)
+            {
+                // 表示
+                ResetUI.gameObject.SetActive(true);
+            }
         }
 
         // Escが押された時
@@ -125,26 +136,26 @@ public class GameManager : MonoBehaviour
         yield break;
     }
 
-    // ゲームオーバー時のアニメーション用コルーチン
-    IEnumerator GameOverUI()
-    {
-        // 演出が終わるまでRキーが押せないようにする
-        canReleoad = false;
+    // ゲームオーバー時のアニメーション用コルーチン（未使用）
+    //IEnumerator GameOverUI()
+    //{
+    //    // 演出が終わるまでRキーが押せないようにする
+    //    canReleoad = false;
 
-        // UIを表示する
-        GameOverBandUI.SetActive(true);
-        GameOverUI1.SetActive(true);
-        GameOverUI2.SetActive(true);
+    //    // UIを表示する
+    //    GameOverBandUI.SetActive(true);
+    //    GameOverUI1.SetActive(true);
+    //    GameOverUI2.SetActive(true);
 
-        // SEを鳴らす
-        audioSource.PlayOneShot(GameOverSE);
+    //    // SEを鳴らす
+    //    audioSource.PlayOneShot(GameOverSE);
 
-        // 2秒待つ
-        yield return new WaitForSeconds(2f);
+    //    // 2秒待つ
+    //    yield return new WaitForSeconds(2f);
 
-        // Rキーを押せるようにする
-        canReleoad = true;
-    }
+    //    // Rキーを押せるようにする
+    //    canReleoad = true;
+    //}
 
     private void LoadNextScene()
     {

@@ -10,6 +10,9 @@ public class StraightEnemy : EnemyBase
         // 直進に戻る
         Vector3 move = transform.forward * moveSpeed;
         rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
+
+        // 歩行アニメーション開始
+        animator.SetBool("Walk", true);
     }
 
     void OnCollisionEnter(Collision collision)

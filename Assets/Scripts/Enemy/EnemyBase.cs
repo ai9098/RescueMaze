@@ -19,12 +19,17 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected AudioClip EnemyFollowSE;
     protected AudioSource audioSource;
 
+    [Header("アニメーション設定")]
+    [SerializeField] protected float follwRotatSpeed = 90f; // 追跡時の回転速度
+    protected Animator animator;
+
     // 内部変数
     protected Rigidbody rb;
     protected bool isPlayerSpotted = false;  // プレイヤーを追いかけているかどうか
     protected bool isPlaySound = false; // 音が鳴っているかどうか
     protected Color defaultColor;  // ゲーム開始時の元も色を覚えておく変数
     protected Renderer enemyColor;  // 敵の色を変えるための変数
+    public bool isRaycastArea = false; // プレイヤーがRaycastエリアに入っているかどうか
 
     protected virtual void Start()
     {
@@ -34,6 +39,7 @@ public class EnemyBase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         enemyColor = GetComponent<Renderer>();
         audioSource = GetComponent<AudioSource>();
+        animator = GetComponentInChildren<Animator>(); // Animatorコンポーネントを取得
 
         if (enemyColor != null)
         {
@@ -58,9 +64,21 @@ public class EnemyBase : MonoBehaviour
             // Rigidbodyで追いかける
             rb.linearVelocity = direction * followSpeed;
 
+            // プレイヤーの方向を計算（自身の位置から）
+            Quaternion targetRotation = Quaternion.LookRotation(player.position - transform.position);
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                follwRotatSpeed * Time.deltaTime // ここで回転速度を定義
+                );
+
+
             // 追跡時は色を変更
             if (enemyColor != null) enemyColor.material.color = Color.red;  // 赤色に変更
             if (exclamationMark != null) exclamationMark.SetActive(true);  // 「！」マーク表示
+
+            // 歩行アニメーション開始
+            animator.SetBool("Walk", true);
         }
         else
         {
@@ -92,6 +110,11 @@ public class EnemyBase : MonoBehaviour
     // 触れている間、ずっと毎フレーム処理する
     private void OnTriggerStay(Collider other)
     {
+        // プレイヤーがRaycastエリアに入っていなければ処理しない（Raycastの負荷軽減）
+        if (!isRaycastArea) return;
+
+        Debug.Log("Raycast開始");
+
         // 視界にPlayerが入ったら
         if (other.CompareTag("Player"))
         {

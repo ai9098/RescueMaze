@@ -23,6 +23,9 @@ public class RescueTarget : MonoBehaviour
     [SerializeField] private AudioClip RescueSE;
     [SerializeField] private AudioClip EnemyAtackSE;
 
+    [Header("アニメーション設定")]
+    private Animator animator;
+
     private bool followPlayer = false;  // Playerについていく状態かどうか
     private bool clear = false;  // 救出済みかどうか
 
@@ -44,7 +47,8 @@ public class RescueTarget : MonoBehaviour
         // ゲーム開始したタイミングで、自身の座標を取得する
         worldPos = transform.position;
 
-        audioSource = GetComponent<AudioSource>();  
+        audioSource = GetComponent<AudioSource>(); // AudioSourceコンポーネントを取得
+        animator = GetComponentInChildren<Animator>(); // Animatorコンポーネントを取得
     }
 
     void Update()
@@ -54,12 +58,29 @@ public class RescueTarget : MonoBehaviour
 
         // プレイヤーの1.5m後ろをついていく(向きはカメラの正面の逆側に)
         Vector3 targetPos = player.position - playerCamera.forward * 1.5f;
+        transform.rotation = Quaternion.LookRotation(player.position - transform.position); // プレイヤーの方を向く（自身の位置から計算）
 
-        // 少しずつ近づく(offset分ずらす)
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPos + offset,
-            MoveSpeed * Time.deltaTime);
+        // 現在地と目標位置（プレイヤー）の距離を計算
+        float distance = Vector3.Distance(transform.position, targetPos);
+        float stopThreshold = 0.03f; // がたつき防止
+
+        // 距離が離れていたら
+        if (distance > stopThreshold)
+        {
+            // 少しずつ近づく(offset分ずらす)
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                targetPos + offset,
+                MoveSpeed * Time.deltaTime);
+
+            // 追跡アニメーション開始
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            // 追跡アニメーション終了
+            animator.SetBool("Run", false);
+        }  
     }
 
     private void OnTriggerEnter(Collider other)
@@ -89,6 +110,8 @@ public class RescueTarget : MonoBehaviour
 
             // ESを鳴らす
             audioSource.PlayOneShot(EnemyAtackSE);
+            // 追跡アニメーション終了
+            animator.SetBool("Run", false);
 
             // 初期位置に戻ったことを知らせるコルーチン開始
             StartCoroutine(LostUI());
@@ -113,8 +136,13 @@ public class RescueTarget : MonoBehaviour
             // ESを鳴らす
             audioSource.PlayOneShot(RescueSE);
 
+            // 追跡アニメーション終了
+            animator.SetBool("Run", false);
+            // 勝利アニメーション開始
+            animator.SetBool("Win", true);
+
             // 助けた人数のカウントを増やす
-            GameManager.Instance.RescueOne();
+            GameManager.Instance.RescueOne();           
         }
     }
 

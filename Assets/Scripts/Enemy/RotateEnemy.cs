@@ -21,6 +21,9 @@ public class RotateEnemy : EnemyBase
     {
         // 見失ったら止める
         rb.linearVelocity = Vector3.zero;
+
+        // その場で歩行アニメーション終了
+        animator.SetBool("Walk", false);
     }
 
     private IEnumerator MoveRoutine()
