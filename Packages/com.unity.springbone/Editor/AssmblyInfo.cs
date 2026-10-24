@@ -1,3 +1,3 @@
-﻿//using UnityEditor.Localization.Editor;
-
-//[assembly: UnityEditor.Localization]
+﻿using UnityEditor.Localization.Editor;
+ 
+[assembly: UnityEditor.Localization]
