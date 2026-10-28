@@ -1974,7 +1974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5164948095340665472, guid: f0d8d2310a360f84dbca909e181b2f8f, type: 3}
       propertyPath: angle
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5164948095340665472, guid: f0d8d2310a360f84dbca909e181b2f8f, type: 3}
       propertyPath: moveSpeed
@@ -5962,7 +5962,7 @@ GameObject:
   - component: {fileID: 1208605191}
   - component: {fileID: 1208605190}
   m_Layer: 0
-  m_Name: Directional Light (1)
+  m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

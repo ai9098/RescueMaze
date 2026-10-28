@@ -273,14 +273,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2717d97c8aa95a46b8819cae1c9b53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StraightEnemy
-  moveSpeed: 3
   followSpeed: 4
   angle: 45
   viewDistance: 4
   segments: 20
-  Player: {fileID: 0}
   viewMeshFilter: {fileID: 6846876660391719421}
   exclamationMark: {fileID: 8806823340563680324}
+  EnemyFollowSE: {fileID: 0}
+  follwRotatSpeed: 90
+  isRaycastArea: 0
+  moveSpeed: 3
 --- !u!54 &605581292137958123
 Rigidbody:
   m_ObjectHideFlags: 0
