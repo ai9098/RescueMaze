@@ -9,7 +9,7 @@
 プレイヤーは一人称視点と上空カメラを切り替えながら、敵の視野を避けて迷路を攻略します。
 
 <p align="center">
-  <img src="Images/game.png" alt="RescueMazeGameplay" width="640">
+  <img src="Images/stage.png" alt="RescueMazeGameplay" width="640">
 </p>
 
 
