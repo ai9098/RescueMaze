@@ -95,6 +95,9 @@ Ver. 1.0
 Ver. 1.1.0
 [https://youtu.be/sb0J-VwltkU](https://youtu.be/6euHPgr9SKY)
 
+Ver. 1.4.0
+[https://youtu.be/cFSyIRK4pRg](https://youtu.be/cFSyIRK4pRg)
+
 ## 使用したアセット
 [AllSky Free - 10 Sky / Skybox Set](https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014)
 
